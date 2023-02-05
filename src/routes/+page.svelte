@@ -48,7 +48,7 @@
         <h1
             class="w-full bg-gradient-to-r from-treelar to-muse p-4 rounded shadow-xl text-center text-4xl font-extrabold"
         >
-            Ita (板)
+            Geta
         </h1>
 
         {#each $PlateStore as p, i (p.id)}
