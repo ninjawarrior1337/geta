@@ -22,5 +22,8 @@
 		"unocss": "^0.48.5",
 		"vite": "^4.1.1"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"decimal.js": "^10.4.3"
+	}
 }

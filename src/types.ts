@@ -1,3 +1,5 @@
+import type Decimal from "decimal.js"
+
 export const SelectableColors = [
     "#F0A20B",
     "#E9A9E8",
@@ -38,4 +40,4 @@ export type PlateUpdate = {
     data?: number
 }
 
-export type TotalBuckets = Record<string, number>
+export type TotalBuckets = Record<string, Decimal>
