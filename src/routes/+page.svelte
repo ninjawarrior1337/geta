@@ -34,7 +34,7 @@
             {
                 type: "plate",
                 color: "#39f",
-                price: 0,
+                data: 0,
                 id: Date.now()
             },
         ]);
@@ -53,7 +53,7 @@
 
         {#each $PlateStore as p, i (p.id)}
             {#if p.type == "plate"}
-                <div transition:slide>
+                <div transition:slide={{duration: 250}}>
                     <PlateItem
                         plateData={p}
                         on:delete={() => removePlate(i)}
@@ -61,7 +61,7 @@
                             updatePlate(i, { color: e.detail });
                         }}
                         on:priceChange={(e) => {
-                            updatePlate(i, { price: e.detail });
+                            updatePlate(i, { data: e.detail });
                         }}
                     />
                 </div>
@@ -79,14 +79,14 @@
         <PlateItem
             on:priceChange={(e) =>
                 TaxStore.update((p) => {
-                    p.price = e.detail;
+                    p.data = e.detail;
                     return p;
                 })}
             plateData={$TaxStore}
         />
         <PlateItem on:priceChange={(e) =>
             TipStore.update((p) => {
-                p.price = e.detail;
+                p.data = e.detail;
                 return p;
             })} plateData={$TipStore} />
 

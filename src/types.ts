@@ -9,7 +9,7 @@ export const SelectableColors = [
     "#AE58EB",
     "#FB75E4",
     "#39f",
-    "#b400ff"
+    "#e4007f"
 ] as const
 
 export type SelectableColor = typeof SelectableColors[number]
@@ -18,22 +18,24 @@ export type IPlateData = {
     type: "plate"
     id: number
     color: SelectableColor
-    price: number
+    data: number
 }
 
 export type ITaxData = {
     type: "tax"
-    price: number
+    data: number
 }
 
 export type ITipData = {
     type: "tip"
-    price: number
+    data: number
 }
 
 export type PlateData = IPlateData | ITaxData | ITipData
 
 export type PlateUpdate = {
     color?: SelectableColor,
-    price?: number
+    data?: number
 }
+
+export type TotalBuckets = Record<string, number>

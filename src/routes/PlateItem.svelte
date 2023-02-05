@@ -6,7 +6,7 @@
 
     export let plateData: PlateData;
 
-    let inner_price = plateData.price.toString();
+    let inner_price = plateData.data.toString();
 
     $: {
         onPriceChange(parseFloat(inner_price))
@@ -51,7 +51,7 @@
         {#if showMenu}
             <div
                 class="absolute top-full left-full mt-2 w-48 p-4 bg-trueGray-7 grid grid-rows-3 grid-cols-3 gap-4 rounded-xl z-100 shadow-xl -translate-x-full origin-tr"
-                transition:scale="{{}}"
+                transition:scale="{{duration: 250}}"
             >
                 {#each SelectableColors as c}
                     <PlateIcon
@@ -82,7 +82,7 @@
 >
     <span>Tip</span>
     <div class="text-3xl p-2 bg-white text-black shadow-xl rounded w-4/12 flex items-center">
-        $<input bind:value={inner_price} type="number" class="w-full outline-none"/>
+        <input bind:value={inner_price} type="number" class="w-full outline-none"/>%
     </div>
 </div>
 {/if}
