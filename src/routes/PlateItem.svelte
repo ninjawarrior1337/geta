@@ -2,6 +2,7 @@
     import { SelectableColors, type PlateData, type SelectableColor } from "../types";
     import { createEventDispatcher } from "svelte";
     import PlateIcon from "./PlateIcon.svelte";
+    import {scale} from "svelte/transition"
 
     export let plateData: PlateData;
 
@@ -49,7 +50,8 @@
 
         {#if showMenu}
             <div
-                class="absolute top-full left-full mt-2 w-48 p-4 bg-trueGray-7 grid grid-rows-3 grid-cols-3 gap-4 rounded-xl z-100 shadow-xl -translate-x-full"
+                class="absolute top-full left-full mt-2 w-48 p-4 bg-trueGray-7 grid grid-rows-3 grid-cols-3 gap-4 rounded-xl z-100 shadow-xl -translate-x-full origin-tr"
+                transition:scale="{{}}"
             >
                 {#each SelectableColors as c}
                     <PlateIcon
@@ -67,7 +69,7 @@
 </div>
 {:else if plateData.type == "tax"}
 <div
-    class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative bg-muse"
+    class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative bg-gray-5"
 >
     <span>Tax</span>
     <div class="text-3xl p-2 bg-white text-black shadow-xl rounded w-4/12 flex items-center">
@@ -76,7 +78,7 @@
 </div>
 {:else if plateData.type == "tip"}
 <div
-    class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative bg-niji"
+    class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative bg-gray-4"
 >
     <span>Tip</span>
     <div class="text-3xl p-2 bg-white text-black shadow-xl rounded w-4/12 flex items-center">

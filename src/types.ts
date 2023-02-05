@@ -14,19 +14,19 @@ export const SelectableColors = [
 
 export type SelectableColor = typeof SelectableColors[number]
 
-type IPlateData = {
-    type: "plate",
+export type IPlateData = {
+    type: "plate"
+    id: number
     color: SelectableColor
     price: number
-
 }
 
-type ITaxData = {
+export type ITaxData = {
     type: "tax"
     price: number
 }
 
-type ITipData = {
+export type ITipData = {
     type: "tip"
     price: number
 }
