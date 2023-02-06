@@ -3,6 +3,7 @@
     import { createEventDispatcher } from "svelte";
     import PlateIcon from "./PlateIcon.svelte";
     import {scale} from "svelte/transition"
+    import {clickOutside} from "$lib/clickOutside"
 
     export let plateData: PlateData;
 
@@ -46,12 +47,13 @@
         $<input bind:value={inner_price} type="number" class="w-full outline-none"/>
     </div>
     <div class="w-2/12 grid-flow-col place-items-center">
-        <PlateIcon on:click={toggleMenu} on:click-outside={toggleMenu} color={plateData.color} />
+        <PlateIcon on:click={toggleMenu} color={plateData.color} />
 
         {#if showMenu}
             <div
                 class="absolute top-full left-full mt-2 w-48 p-4 bg-trueGray-7 grid grid-rows-3 grid-cols-3 gap-4 rounded-xl z-100 shadow-xl -translate-x-full origin-tr"
                 transition:scale="{{duration: 250}}"
+                use:clickOutside={toggleMenu}
             >
                 {#each SelectableColors as c}
                     <PlateIcon
