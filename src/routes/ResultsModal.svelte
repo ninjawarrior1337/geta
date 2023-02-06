@@ -26,7 +26,7 @@
 </script>
 
 {#if open}
-<div class="absolute inset-0">
+<div class="sticky inset-0">
     <div class="w-8/12 min-h-full mx-auto py-16">
         <div class="bg-trueGray-8 h-full shadow-xl rounded-lg border-2 border-sky-300 flex flex-col p-4 space-y-4 relative">
             <button on:click={() => dispatch("close")} class="absolute top-4 right-4 text-white">X</button>
