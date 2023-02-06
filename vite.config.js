@@ -14,9 +14,6 @@ const config = {
 		]
 	}), sveltekit(), VitePWA({
 		registerType: 'autoUpdate',
-		devOptions: {
-			enabled: true
-		},
 		manifest: {
 			name: 'Geta',
 			short_name: 'Geta',
