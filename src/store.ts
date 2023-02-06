@@ -17,6 +17,15 @@ const GrandTotalStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore],
     const tipPercent = new Decimal(ti.data).div(100)
     const tip = sumBeforeAddons.mul(tipPercent)
     const tax = new Decimal(ta.data)
+    
+    return sumBeforeAddons.add(tip).add(tax).toFixed(2)
+})
+
+const BucketsStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore], ([st, ps, ta, ti]) => {
+    const sumBeforeAddons = st
+    const tipPercent = new Decimal(ti.data).div(100)
+    const tip = sumBeforeAddons.mul(tipPercent)
+    const tax = new Decimal(ta.data)
 
     let buckets: TotalBuckets = {}
 
@@ -38,14 +47,7 @@ const GrandTotalStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore],
         buckets[k] = buckets[k].add(percentage.mul(tax))
     }
 
-    let fmtBuckets: Record<string, string> = {}
-    for(const [k, v] of Object.entries(buckets)) {
-        fmtBuckets[k] = v.toFixed(2)
-    }
-
-    console.log(fmtBuckets)
-    
-    return sumBeforeAddons.add(tip).add(tax).toFixed(2)
+    return buckets
 })
 
-export {PlateStore, SubtotalStore, TaxStore, TipStore, GrandTotalStore}
+export {PlateStore, SubtotalStore, TaxStore, TipStore, GrandTotalStore, BucketsStore}

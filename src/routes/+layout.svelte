@@ -12,7 +12,7 @@
                 r && setInterval(() => {
                     console.log('Checking for sw update')
                     r.update()
-                }, 20000)
+                }, 60*60*1000)
             },
             onRegisterError(error) {
                 console.log('SW registration error', error)

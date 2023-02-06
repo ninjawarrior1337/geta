@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type { SelectableColors } from "../types";
-
-    export let color: typeof SelectableColors[number]
+    export let color: string
 </script>
 
 <button on:click class="aspect-square w-full h-full bg-white grid place-items-center rounded-full">

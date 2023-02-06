@@ -8,7 +8,9 @@
         TaxStore,
         TipStore,
         GrandTotalStore,
+        BucketsStore
     } from "../store";
+    import ResultsModal from "./ResultsModal.svelte";
 
     const updatePlate = (idx: number, p: PlateUpdate) => {
         PlateStore.update((s) => {
@@ -39,12 +41,14 @@
             },
         ]);
     };
+
+    let resultsOpen = false;
 </script>
 
 <div
     class="flex justify-center max-w-screen min-h-screen bg-trueGray-8 text-white pb-12"
 >
-    <div class="w-11/12 lg:w-1/3 pt-12 space-y-6">
+    <div class="w-11/12 md:w-1/3 pt-12 space-y-6">
         <h1
             class="w-full bg-gradient-to-r from-treelar to-muse p-4 rounded shadow-xl text-center text-4xl font-extrabold"
         >
@@ -71,9 +75,7 @@
         <div
             class="grid grid-cols-1 text-2xl font-bold children:p-1 first:rounded-l children:last:rounded-r"
         >
-            <!-- <button class="bg-muse">+Tax</button> -->
             <button on:click={addPlate} class="bg-aqours">+</button>
-            <!-- <button class="bg-niji">+Tip</button> -->
         </div>
 
         <PlateItem
@@ -90,7 +92,8 @@
                 return p;
             })} plateData={$TipStore} />
 
-        <div>Subtotal: {$SubtotalStore}</div>
-        <div>Grand Total: {$GrandTotalStore}</div>
+        <button class="bg-muse w-full py-4 rounded text-xl font-bold" on:click={() => resultsOpen = true}>Calculate</button>
     </div>
 </div>
+
+<ResultsModal on:close={() => resultsOpen = false} open={resultsOpen} buckets={$BucketsStore}/>

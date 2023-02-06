@@ -42,7 +42,7 @@
     class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative"
     style={`background-color: ${plateData.color};`}
 >
-    <div class="text-3xl p-2 bg-white text-black shadow-xl rounded w-4/12 flex items-center">
+    <div class="text-3xl p-2 bg-white text-black shadow-xl rounded max-w-6/12 flex items-center">
         $<input bind:value={inner_price} type="number" class="w-full outline-none"/>
     </div>
     <div class="w-2/12 grid-flow-col place-items-center">
@@ -86,4 +86,3 @@
     </div>
 </div>
 {/if}
-
