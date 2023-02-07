@@ -32,7 +32,7 @@
         transition:blur={{ duration: 250 }}
         class="fixed inset-0 backdrop-blur-lg bg-gray-800/60"
     >
-        <div class="w-8/12 max-h-full mx-auto py-16">
+        <div class="w-9/12 md:w-1/3 max-h-full mx-auto py-16">
             <div
                 class="bg-trueGray-8 h-full shadow-xl rounded-lg border-2 border-treelar flex flex-col p-4 space-y-4 relative"
                 use:clickOutside={() => {
