@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dev } from "$app/environment";
     import { createEventDispatcher } from "svelte";
-    import { GrandTotalStore, SubtotalStore } from "../store";
+    import { TotalsStore } from "../store";
     import type { TotalBuckets } from "../types";
     import PlateIcon from "./PlateIcon.svelte";
     import { blur } from "svelte/transition";
@@ -36,7 +36,7 @@
             <div
                 class="bg-trueGray-8 h-full shadow-xl rounded-lg border-2 border-treelar flex flex-col p-4 space-y-4 relative"
                 use:clickOutside={() => {
-                    dispatch("close")
+                    dispatch("close");
                 }}
             >
                 {#each Object.entries(fmtBuckets) as [c, split]}
@@ -49,14 +49,20 @@
                         >
                     </div>
                 {/each}
-                <span class="text-white font-bold text-2xl"
-                    >Subtotal: ${$SubtotalStore}</span
+                <span class="text-white font-bold text-xl"
+                    >Subtotal: ${$TotalsStore.subTotal.toFixed(2)}</span
+                >
+                <span class="text-white font-bold text-xl"
+                    >Tip: ${$TotalsStore.tipTotal.toFixed(2)}</span
+                >
+                <span class="text-white font-bold text-xl"
+                    >Tax: ${$TotalsStore.taxTotal.toFixed(2)}</span
                 >
                 <span class="text-white font-bold text-2xl"
-                    >Total: ${$GrandTotalStore}</span
+                    >Total: ${$TotalsStore.grandTotal.toFixed(2)}</span
                 >
                 <button
-                    class="bg-muse rounded text-white py-2"
+                    class="bg-muse rounded text-white py-2 font-bold"
                     on:click={() => dispatch("close")}
                 >
                     Close

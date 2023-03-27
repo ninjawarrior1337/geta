@@ -12,20 +12,24 @@ const SubtotalStore = derived([PlateStore], ([s]) => {
     return sum
 })
 
-const GrandTotalStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore], ([st, ps, ta, ti]) => {
+const TotalsStore = derived([SubtotalStore, TaxStore, TipStore], ([st, ta, ti]) => {
     const sumBeforeAddons = st
     const tipPercent = new Decimal(ti.data).div(100)
     const tip = sumBeforeAddons.mul(tipPercent)
     const tax = new Decimal(ta.data)
-    
-    return sumBeforeAddons.add(tip).add(tax).toFixed(2)
+
+    return {
+        subTotal: sumBeforeAddons,
+        tipTotal: tip,
+        taxTotal: tax,
+        grandTotal: sumBeforeAddons.add(tip).add(tax),
+    }
 })
 
-const BucketsStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore], ([st, ps, ta, ti]) => {
-    const sumBeforeAddons = st
-    const tipPercent = new Decimal(ti.data).div(100)
-    const tip = sumBeforeAddons.mul(tipPercent)
-    const tax = new Decimal(ta.data)
+const BucketsStore = derived([TotalsStore, PlateStore], ([ts, ps]) => {
+    const sumBeforeAddons = ts.subTotal
+    const tip = ts.tipTotal
+    const tax = ts.taxTotal
 
     let buckets: TotalBuckets = {}
 
@@ -50,4 +54,4 @@ const BucketsStore = derived([SubtotalStore, PlateStore, TaxStore, TipStore], ([
     return buckets
 })
 
-export {PlateStore, SubtotalStore, TaxStore, TipStore, GrandTotalStore, BucketsStore}
+export {PlateStore, SubtotalStore, TaxStore, TipStore, TotalsStore, BucketsStore}

@@ -1,14 +1,12 @@
 <script lang="ts">
     import PlateItem from "./PlateItem.svelte";
-    import {slide} from "svelte/transition"
+    import { slide } from "svelte/transition";
     import type { PlateUpdate } from "../types";
     import {
         PlateStore,
-        SubtotalStore,
         TaxStore,
         TipStore,
-        GrandTotalStore,
-        BucketsStore
+        BucketsStore,
     } from "../store";
     import ResultsModal from "./ResultsModal.svelte";
 
@@ -37,7 +35,7 @@
                 type: "plate",
                 color: "#39f",
                 data: 0,
-                id: Date.now()
+                id: Date.now(),
             },
         ]);
     };
@@ -57,7 +55,7 @@
 
         {#each $PlateStore as p, i (p.id)}
             {#if p.type == "plate"}
-                <div transition:slide={{duration: 250}}>
+                <div transition:slide={{ duration: 250 }}>
                     <PlateItem
                         plateData={p}
                         on:delete={() => removePlate(i)}
@@ -86,14 +84,24 @@
                 })}
             plateData={$TaxStore}
         />
-        <PlateItem on:priceChange={(e) =>
-            TipStore.update((p) => {
-                p.data = e.detail;
-                return p;
-            })} plateData={$TipStore} />
+        <PlateItem
+            on:priceChange={(e) =>
+                TipStore.update((p) => {
+                    p.data = e.detail;
+                    return p;
+                })}
+            plateData={$TipStore}
+        />
 
-        <button class="bg-muse w-full py-4 rounded text-xl font-bold" on:click={() => resultsOpen = true}>Calculate</button>
+        <button
+            class="bg-muse w-full py-4 rounded text-xl font-bold"
+            on:click={() => (resultsOpen = true)}>Calculate</button
+        >
     </div>
 </div>
 
-<ResultsModal on:close={() => resultsOpen = false} open={resultsOpen} buckets={$BucketsStore}/>
+<ResultsModal
+    on:close={() => (resultsOpen = false)}
+    open={resultsOpen}
+    buckets={$BucketsStore}
+/>
