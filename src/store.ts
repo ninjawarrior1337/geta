@@ -1,57 +1,19 @@
 import {writable, derived} from "svelte/store"
 import type { IPlateData, ITaxData, ITipData, PlateData, TotalBuckets } from "./types"
 import {Decimal} from "decimal.js/decimal"
+import { computeBuckets, computeSubtotal, computeTotals } from "$lib/calculations"
 
-const PlateStore = writable<IPlateData[]>([])
+export const PlateStore = writable<IPlateData[]>([])
 
-const TaxStore = writable<ITaxData>({type: "tax", data: 0})
-const TipStore = writable<ITipData>({type: "tip", data: 0})
+export const TaxStore = writable<ITaxData>({type: "tax", data: 0})
+export const TipStore = writable<ITipData>({type: "tip", data: 0})
 
-const SubtotalStore = derived([PlateStore], ([s]) => {
-    const sum = s.filter(i => i.type == "plate").reduce((a, b) => a.add(b.data), new Decimal(0))
-    return sum
+export const SubtotalStore = derived([PlateStore], ([s]) => computeSubtotal(s))
+
+export const TotalsStore = derived([SubtotalStore, TaxStore, TipStore], ([st, ta, ti]) => {
+    return computeTotals(st, ta.data, ti.data)
 })
 
-const TotalsStore = derived([SubtotalStore, TaxStore, TipStore], ([st, ta, ti]) => {
-    const sumBeforeAddons = st
-    const tipPercent = new Decimal(ti.data).div(100)
-    const tip = sumBeforeAddons.mul(tipPercent)
-    const tax = new Decimal(ta.data)
-
-    return {
-        subTotal: sumBeforeAddons,
-        tipTotal: tip,
-        taxTotal: tax,
-        grandTotal: sumBeforeAddons.add(tip).add(tax),
-    }
+export const BucketsStore = derived([TotalsStore, PlateStore], ([ts, ps]) => {
+    return computeBuckets(ts, ps)
 })
-
-const BucketsStore = derived([TotalsStore, PlateStore], ([ts, ps]) => {
-    const sumBeforeAddons = ts.subTotal
-    const tip = ts.tipTotal
-    const tax = ts.taxTotal
-
-    let buckets: TotalBuckets = {}
-
-    // Add total spent by each person
-    for(let p of ps) {
-        if(p.type == "plate") {
-            if(p.color in buckets) {
-                buckets[p.color] = buckets[p.color].add(p.data)
-            } else {
-                buckets[p.color] = new Decimal(p.data)
-            }
-        }
-    }
-
-    // Add tip based on what percentage of total each person spent
-    for(const [k, v] of Object.entries(buckets)) {
-        const percentage = new Decimal(v).div(sumBeforeAddons)
-        buckets[k] = buckets[k].add(percentage.mul(tip))
-        buckets[k] = buckets[k].add(percentage.mul(tax))
-    }
-
-    return buckets
-})
-
-export {PlateStore, SubtotalStore, TaxStore, TipStore, TotalsStore, BucketsStore}

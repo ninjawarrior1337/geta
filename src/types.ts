@@ -18,7 +18,7 @@ export type SelectableColor = typeof SelectableColors[number]
 
 export type IPlateData = {
     type: "plate"
-    id: number
+    id?: number
     color: SelectableColor
     data: number
 }
