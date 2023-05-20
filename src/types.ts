@@ -28,12 +28,17 @@ export type ITaxData = {
     data: number
 }
 
+export type IDiscountData = {
+    type: "discount"
+    data: number
+}
+
 export type ITipData = {
     type: "tip"
     data: number
 }
 
-export type PlateData = IPlateData | ITaxData | ITipData
+export type PlateData = IPlateData | ITaxData | ITipData | IDiscountData
 
 export type PlateUpdate = {
     color?: SelectableColor,

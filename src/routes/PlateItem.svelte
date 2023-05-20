@@ -87,4 +87,13 @@
         <input bind:value={inner_price} type="number" class="w-full outline-none"/>%
     </div>
 </div>
+{:else if plateData.type == "discount"}
+<div
+    class="flex items-center justify-between w-full p-4 font-bold text-2xl rounded relative bg-gray-6"
+>
+    <span>Discount</span>
+    <div class="text-3xl p-2 bg-white text-black shadow-xl rounded w-4/12 flex items-center">
+        $<input bind:value={inner_price} type="number" class="w-full outline-none"/>
+    </div>
+</div>
 {/if}

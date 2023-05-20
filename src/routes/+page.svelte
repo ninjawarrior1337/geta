@@ -7,6 +7,8 @@
         TaxStore,
         TipStore,
         BucketsStore,
+        DiscountStore,
+        TaxStoreRaw,
     } from "../store";
     import ResultsModal from "./ResultsModal.svelte";
 
@@ -78,7 +80,15 @@
 
         <PlateItem
             on:priceChange={(e) =>
-                TaxStore.update((p) => {
+                DiscountStore.update((p) => {
+                    p.data = e.detail;
+                    return p;
+                })}
+            plateData={$DiscountStore}
+        />
+        <PlateItem
+            on:priceChange={(e) =>
+                TaxStoreRaw.update((p) => {
                     p.data = e.detail;
                     return p;
                 })}

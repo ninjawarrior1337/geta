@@ -16,7 +16,7 @@
 
     const getFmtBuckets = (b: TotalBuckets) => {
         let fmtBuckets: Record<string, string> = {};
-        for (const [k, v] of Object.entries(buckets)) {
+        for (const [k, v] of Object.entries(b)) {
             fmtBuckets[k] = v.toFixed(2);
         }
         return fmtBuckets;
@@ -53,10 +53,13 @@
                     >Subtotal: ${$TotalsStore.subTotal.toFixed(2)}</span
                 >
                 <span class="text-white font-bold text-xl"
+                    >Discount: ${$TotalsStore.discountTotal.toFixed(2)}</span
+                >
+                <span class="text-white font-bold text-xl"
                     >Tip: ${$TotalsStore.tipTotal.toFixed(2)}</span
                 >
                 <span class="text-white font-bold text-xl"
-                    >Tax: ${$TotalsStore.taxTotal.toFixed(2)}</span
+                    >Tax: ${($TotalsStore.taxTotal.add($TotalsStore.discountTotal)).toFixed(2)}</span
                 >
                 <span class="text-white font-bold text-2xl"
                     >Total: ${$TotalsStore.grandTotal.toFixed(2)}</span
